@@ -68,3 +68,120 @@
 # YOUR CODE BELOW — remove the # symbols from the scaffold and fill it in
 # =============================================================================
 
+def add(a, b):
+    """Returns the sum of a and b."""
+    return a + b
+
+
+def subtract(a, b):
+    """Returns the difference of a and b."""
+    return a - b
+
+
+def multiply(a, b):
+    """Returns the product of a and b."""
+    return a * b
+
+
+def divide(a, b):
+    """Returns the quotient of a and b, rounded to 2 decimal places.
+    Raises ZeroDivisionError if b is 0."""
+    if b == 0:
+        raise ZeroDivisionError
+    return round(a / b, 2)
+
+
+def modulus(a, b):
+    """Returns the remainder of a divided by b.
+    Raises ZeroDivisionError if b is 0."""
+    if b == 0:
+        raise ZeroDivisionError
+    return a % b
+
+
+def exponent(a, b):
+    """Returns a raised to the power of b."""
+    return a ** b
+
+
+def get_numbers():
+    """Prompts for two numbers and returns them as floats, or None if invalid."""
+    first_input = input("Enter first number : ")
+    second_input = input("Enter second number: ")
+
+    try:
+        first = float(first_input)
+        second = float(second_input)
+    except ValueError:
+        print("Error: Please enter valid numbers.")
+        return None
+
+    return first, second
+
+
+def print_menu():
+    """Prints the calculator menu."""
+    print("=========================")
+    print("     SIMPLE CALCULATOR")
+    print("=========================")
+    print("1. Addition")
+    print("2. Subtraction")
+    print("3. Multiplication")
+    print("4. Division")
+    print("5. Modulus")
+    print("6. Exponentiation")
+    print("7. Quit")
+
+
+def main():
+    operations = {
+        "1": ("+", add),
+        "2": ("-", subtract),
+        "3": ("*", multiply),
+        "4": ("/", divide),
+        "5": ("%", modulus),
+        "6": ("**", exponent),
+    }
+
+    while True:
+        print_menu()
+        choice = input("Select an operation (1-7): ")
+
+        if choice == "7":
+            print("Goodbye!")
+            break
+
+        if choice not in operations:
+            print("Error: Invalid choice. Please select a number between 1 and 7.")
+            print()
+            continue
+
+        symbol, operation = operations[choice]
+
+        numbers = get_numbers()
+        if numbers is None:
+            print()
+            continue
+
+        first, second = numbers
+
+        try:
+            result = operation(first, second)
+        except ZeroDivisionError:
+            print("Error: Cannot divide by zero.")
+            print()
+            continue
+
+        print(f"Result: {format_num(first)} {symbol} {format_num(second)} = {result}")
+        print()
+
+
+def format_num(val):
+    """Formats a number without unnecessary decimal points."""
+    if val == int(val):
+        return str(int(val))
+    return str(val)
+
+
+if __name__ == "__main__":
+    main()
